@@ -11,6 +11,18 @@
 |
 */
 
-Route::get('/', 'IndexController@index');
+Route::get('/', 'PostController@index');
 
-Route::get('/post', 'PostController@index');
+Route::group(['prefix'=>'admin'], function(){	
+	Route::group(['prefix'=>'posts'], function(){
+		
+		Route::get('', ['as' => 'admin.posts.index', 'uses'=>'PostAdminController@index']);		
+		Route::get('create', ['as' => 'admin.posts.create', 'uses'=>'PostAdminController@create']);	
+		Route::post('store', ['as' => 'admin.posts.store', 'uses'=>'PostAdminController@store']);	
+		Route::get('edit/{id}', ['as' => 'admin.posts.edit', 'uses'=>'PostAdminController@edit']);		
+		Route::put('update/{id}', ['as' => 'admin.posts.update', 'uses'=>'PostAdminController@update']);		
+		Route::get('destroy/{id}', ['as' => 'admin.posts.destroy', 'uses'=>'PostAdminController@destroy']);
+		
+	});		
+});
+

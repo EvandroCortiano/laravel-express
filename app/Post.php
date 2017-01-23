@@ -2,8 +2,9 @@
 
 namespace App;
 
-use Illuminate\Database\Eloquent\Model;
 use App\Comment;
+use Illuminate\Database\Eloquent\Model;
+
 
 class Post extends Model
 {
@@ -19,4 +20,11 @@ class Post extends Model
     public function tags(){
     	return $this->belongsToMany('App\Tag', 'posts_tags');
     }
+    
+    //atributos dinamigos get attribute
+    public function getTagListAttribute(){
+    	$tags = $this->tags()->lists('name')->all();
+    	return implode(', ', $tags);
+    }
+
 }

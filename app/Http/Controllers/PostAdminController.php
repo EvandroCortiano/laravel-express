@@ -16,6 +16,11 @@ class PostAdminController extends Controller
 		
 	}
 	
+	public function auth(){
+		
+		
+	}
+	
     public function index(){
     	
     	$posts = $this->post->paginate(10);

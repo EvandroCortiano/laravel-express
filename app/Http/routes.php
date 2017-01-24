@@ -12,8 +12,41 @@
 */
 
 Route::get('/', 'PostController@index');
+/*
+Route::get('/auth', function() {
+	//força entrada login do usuario
+	//$user = \App\User::find(2);
+	//Auth::login($user);
+	//if(Auth::check()){
+	//	return 'Validado!';
+	//}
+	
+	if(Auth::attempt(['email'=>'evandro@evandro.com', 'password'=>123456])){
+		return 'Validado!';
+	} else {
+		return 'Falhou!';
+	}
+	
+});
+*/
 
-Route::group(['prefix'=>'admin'], function(){	
+// Pode ser trocado tudo isso por Route::controllers([..
+//Route::get('auth/login', 'Auth\AuthController@getLogin');
+//Route::post('auth/login', 'Auth\AuthController@postLogin');
+//Route::get('auth/logout', 'Auth\AuthController@getLogout');
+Route::controllers([
+		'auth' => 'Auth\AuthController',
+		'password' => 'Auth\PasswordController',
+]);
+
+
+/*
+Route::get('/auth/logout', function () {
+	Auth::logout();
+});
+*/
+
+Route::group(['prefix'=>'admin', 'middleware'=>'auth'], function(){	
 	Route::group(['prefix'=>'posts'], function(){
 		
 		Route::get('', ['as' => 'admin.posts.index', 'uses'=>'PostAdminController@index']);		
